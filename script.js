@@ -1,5 +1,6 @@
-/*
 const form = document.querySelector(".form");
+const btnSend = document.querySelector('.send-btn');
+
 // блокируем отправку данных по нажатию на кнопку
 form.addEventListener("submit", (event) => {
     // Предотвращает действие браузера по умолчанию. В данном случае — отправку формы
@@ -11,7 +12,7 @@ form.addEventListener("submit", (event) => {
     const phone = document.querySelector("#phone");
     const email = document.querySelector("#email");
     const agree = document.querySelector("#agree");
-    const photo = document.querySelector("#photo");
+    //const photo = document.querySelector("#photo");
 
     fetch(`http://46.21.248.81:3001/user`, {
             method: "POST",
@@ -26,7 +27,7 @@ form.addEventListener("submit", (event) => {
                 phone: phone.value,
                 email: email.value,
                 agree: agree.checked,
-                photo: photo.src,
+                //photo: photo.src,
             }),
         })
         .then((data) => {
@@ -35,7 +36,7 @@ form.addEventListener("submit", (event) => {
         .then((data) => {
             // Креативим модальное окно
             if (data.message) {
-                alert(data.message);
+                openModal();
             }
             form.reset();
         })
@@ -44,11 +45,30 @@ form.addEventListener("submit", (event) => {
             alert("Произошла ошибка :(");
         });
 
-}); */
+});
+
+const modal = document.querySelector('.modal');
+const btnClose = document.querySelector('.close');
+
+function openModal() {
+    // открытие модального окна
+    modal.style.display = "block";
+
+    // закрытие модаьного окна при нажатие на крестик
+    btnClose.addEventListener('click', () => {
+        modal.style.display = "none";
+    })
 
 
+    // закрытие модального окна при щелчке в любом месте за его пределами
+    window.addEventListener('click', (event) => {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    })
+}
 
-
+/*
 // Вариант решения с использованием функции
 const form = document.querySelector(".form");
 // блокируем отправку данных по нажатию на кнопку
@@ -87,7 +107,7 @@ form.addEventListener("submit", (event) => {
             alert("Произошла ошибка :(");
         });
 
-});
+}); */
 
 
 
