@@ -38,6 +38,7 @@ form.addEventListener("submit", (event) => {
             if (data.message) {
                 openModal();
             }
+            // восстанавливаем значения формы по умолчанию через метод reset
             form.reset();
         })
         .catch((e) => {
@@ -68,79 +69,23 @@ function openModal() {
     })
 }
 
-/*
-// Вариант решения с использованием функции
-const form = document.querySelector(".form");
-// блокируем отправку данных по нажатию на кнопку
-form.addEventListener("submit", (event) => {
-    // Предотвращает действие браузера по умолчанию. В данном случае — отправку формы
-    // https://learn.javascript.ru/default-browser-action
-    event.preventDefault();
+// функция загрузки файла
+function uploadFile() {
+    let uploadFile = document.querySelector('#uploadFile');
+    uploadFile.addEventListener('change', function readURL() {
+        //Доступ к первому выбранному файлу с помощью классического селектора DOM - files[0]
+        let file = document.querySelector('#uploadFile').files[0];
 
-    // функция сбора данных с формы заполненной пользователям
-    function сollectUserData(form) {
-        // возвращаю заполненные поля пользователям
-        return form.value;
-    }
-
-    fetch(`http://46.21.248.81:3001/user`, {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-                Authorization: "Bearer: virkosha",
-            },
-            body: JSON.stringify(сollectUserData()),
+        // подключаем конструктор API FileReader - объект, который позволяет веб-приложениям асинхронно считывать содержимое файлов, хранящихся на компьютере пользователя
+        const reader = new FileReader();
+        //loadend - это событие, которое запускается, когда чтение файла завершено успешно/не успешно
+        reader.addEventListener('loadend', () => {
+            //result - свойство возвращает содержимое файла, после завершения операции чтения
+            document.querySelector('#clock').style.backgroundImage = "url(" + reader.result + ")";
         })
-        .then((data) => {
-            return data.json();
-        })
-        .then((data) => {
-            // Креативим модальное окно
-            if (data.message) {
-                alert(data.message);
-            }
-            form.reset();
-        })
-        .catch((e) => {
-            // И тут
-            alert("Произошла ошибка :(");
-        });
-
-}); */
-
-
-
-
-// Идеи модального окна с интернета
-/* class CustomAlert {
-    constructor() {}
-
-    show(message) {
-        const dialogOverlay = document.querySelector('.js-overlay');
-        const dialogBox = document.querySelector('.js-box')
-
-        dialogOverlay.style.display = 'block'
-        dialogBox.style.display = 'block'
-
-        document.querySelector('.js-header').innerHTML = 'Всплывающее диалоговое окно'
-        document.querySelector('.js-body').innerHTML = message
-        document.querySelector('.js-footer').innerHTML = '<button class="button" onclick="alert.ok()">Закрыть</button>'
-    }
-
-    ok() {
-        this.hide()
-    }
-
-    hide() {
-        document.querySelector('.js-box').style.display = 'none'
-        document.querySelector('.js-overlay').style.display = 'none'
-    }
+        if (file) {
+            //Метод readAsDataURLиспользуется для чтения содержимого указанного в Blob или File
+            reader.readAsDataURL(file);
+        }
+    })
 }
-
-const alert = new CustomAlert()
-
-function popup() {
-    const message = `Случайное число: ${Math.random()}`
-    alert.show(message)
-} */

@@ -42,19 +42,18 @@
 
             <!--Атрибут enctype="multipart/form-data" используется как элемент управления для выбора файла при загрузке-->
             <div class="form-row" enctype="multipart/form-data">
-                <label class="form-upload__label" for="uploadForm_File">
-                    <span class="form-upload__title">Изображение:</span>
-                    <!--атрибут accept устанавливает какой формат файлов можно загрузить-->
-                    <input
-                      class="form-upload__input"
-                      id="uploadForm_File"
-                      type="file"
-                      name="file_name"
-                      accept="image/*"
-                      required
-                    >
-                  </label>
+
+                <label for="uploadFile">Изображение:</label>
+                <!--атрибут accept устанавливает какой формат файлов можно загрузить-->
+                <!--атрибут multiple элемента inputп озволяет пользователю выбирать несколько файлов-->
+                <input type="file" id="uploadFile" accept="image/*" required multiple>
+
+                <div class="avatar-preview">
+                    <div id="clock" style="background-image: url(https://new.kemmamed.ru/upload/staff_photo_no.jpg);">
+                    </div>
+                </div>
             </div>
+
 
             <div class="form-row inline">
                 <label for="agree">Я согласна на обработку персональных данных
